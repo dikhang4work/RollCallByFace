@@ -1,7 +1,11 @@
 from ctypes import resize
+from itertools import count
+from sre_parse import State
+import threading
 import tkinter as tk
+from unicodedata import name
 from src.control.BtnAdd import run as btnAdd
-from src.control.GUI import exit
+from src.control.GUI import exit, getALLStudent
 from src.muster.muster import run as muster
 
 
@@ -39,6 +43,43 @@ frame_content.grid(row=0, column=1, rowspan=3, sticky="nsew")
 frame_content.columnconfigure(0, minsize=10)
 frame_content.rowconfigure([0, 1], minsize=10)
 
+thread_learning = None
+thread_muster = None
+
+lstStudent = getALLStudent()
+
+
+def onclickMuster(frame):
+    global window, button__muster, button__add
+    frame.destroy()
+
+    frame = tk.Frame(master=window, width=900, height=600)
+    frame.grid(row=0, column=1, rowspan=3, sticky="nsew")
+    frame.columnconfigure(0, minsize=10)
+    frame.rowconfigure([0, 1], minsize=10)
+
+    button__muster['state'] = 'disabled'
+    button__add['state'] = 'normal'
+    
+    window.update()
+    muster(window, frame, thread_muster)
+
+def onclickAdd(frame):
+    global window, button__muster, button__add
+    frame.destroy()
+
+    frame = tk.Frame(master=window, width=900, height=600)
+    frame.grid(row=0, column=1, rowspan=3, sticky="nsew")
+    frame.columnconfigure(0, minsize=10)
+    frame.rowconfigure([0, 1], minsize=10)
+
+    button__muster['state'] = 'normal'
+    button__add['state'] = 'disabled'
+
+    window.update()
+    btnAdd(window, frame, thread_learning)
+
+
 label__class = tk.Label(
     master=frame,
     text="Lớp: DHKTPM14",
@@ -50,7 +91,7 @@ label__class.grid(row=0, column=0, sticky="nsew")
 
 label__class_size = tk.Label(
     master=frame,
-    text="Số lượng: 30",
+    text="Số lượng: "+str(len(lstStudent)),
     width=20,
     height=2,
     font=("Arial", 16)
@@ -74,7 +115,7 @@ button__muster = tk.Button(
     width=20,
     height=2,
     font=("Arial", 16),
-    command= lambda: muster(window, frame_content)
+    command= lambda: onclickMuster(frame_content)
 )
 button__muster.grid(row=5, column=0, sticky="nsew")
     
@@ -84,7 +125,7 @@ button__add = tk.Button(
     width=20,
     height=2,
     font=("Arial", 16),
-    command=lambda: btnAdd(window,frame_content)
+    command=lambda: onclickAdd(frame_content)
 )
 button__add.grid(row=6, column=0, sticky="nsew")
 
@@ -97,8 +138,6 @@ button__exit = tk.Button(
     command=lambda: exit(window)
 )
 button__exit.grid(row=8, column=0, sticky="nsew")
-
-
 
 
 window.mainloop()

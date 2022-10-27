@@ -25,7 +25,7 @@ def selectDate(root, result, button):
     cal.pack(fill="both", expand=True, padx=10, pady=10)
     tk.Button(top, text="ok", command=print_sel).pack()
 
-def handleFinish(id, name, class__, birthday, sex, window, frame):
+def handleFinish(id, name, class__, birthday, sex, window, frame, thread):
     if id == "":
         messagebox.showerror("Lỗi", "Mã sinh viên không được để trống")
         return
@@ -64,9 +64,9 @@ def handleFinish(id, name, class__, birthday, sex, window, frame):
     frame.columnconfigure(0, minsize=10)
     frame.rowconfigure([0, 1], minsize=10)
     
-    scanFace(window, frame, data)
+    scanFace(window, frame, data, thread)
 
-def run(window, frame):
+def run(window, frame, thread):
 
     sex = tk.StringVar(master=frame, value="Nam")
     label__id = tk.Label(
@@ -195,7 +195,8 @@ def run(window, frame):
             entry__birthday.cget('text'),
             sex.get(),
             window,
-            frame),
+            frame, 
+            thread),
     )
 
     button__finish.grid(row=8, column=1, sticky="nsew")

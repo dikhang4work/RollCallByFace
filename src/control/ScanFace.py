@@ -66,9 +66,8 @@ def show_frame():
 
 def main(window, frame, data, label_status):
     global canvas, window__, data__, label_status__
-    if canvas is None:
-        canvas = Canvas(frame, width=600, height=400)
-        canvas.grid(row=0, column=0)
+    canvas = Canvas(frame, width=600, height=400)
+    canvas.grid(row=0, column=0)
     if window__ is None:
         window__ = window
     if data__ is None:
@@ -103,7 +102,7 @@ def insertOrUpdateStudent(data):
 
 
 
-def run(window, frame, data):
+def run(window, frame, data, thread):
     sys.setrecursionlimit(100000)
     
 
@@ -111,10 +110,12 @@ def run(window, frame, data):
     text="Đang quét khuôn mặt __ 0%", 
     font=("Arial", 20), 
     fg="blue")
-
+    
     thread = Thread(target=main, args=(window,frame, data, label_status))
     thread.start()
 
+
     label_status.grid(row=1, column=0)
     insertOrUpdateStudent(json.loads(data))
+    
 
