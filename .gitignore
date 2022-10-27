@@ -62,5 +62,3 @@
 *.3dm
 
 __pycache__/
-
-*yml
