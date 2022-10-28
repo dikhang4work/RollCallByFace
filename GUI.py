@@ -98,16 +98,6 @@ label__class_size = tk.Label(
 )
 label__class_size.grid(row=2, column=0, sticky="nsew")
 
-label__class_present = tk.Label(
-    master=frame,
-    text="Có mặt: 0",
-    width=20,
-    height=2,
-    font=("Arial", 16),
-    fg="red"
-)
-label__class_present.grid(row=3, column=0, sticky="nsew")
-
 
 button__muster = tk.Button(
     master=frame,

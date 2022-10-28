@@ -168,7 +168,7 @@ def main(window, frame):
         )
     button__check = tkinter.Button(
                         master=frame,
-                        text="Check",
+                        text="Xác nhận",
                         width=20,
                         height=1,
                         font=("Arial", 16),
